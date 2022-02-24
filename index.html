@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="index.css">
+    <title>2D Web Based CAD</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="title">2D Web Based CAD</h2>
+        <div class="menu">
+            <div class="shapeMenu">
+                <label for="shape-menu">Shape</label>
+                <select id="shape-menu">
+                    <option value="line">Line</option>
+                    <option value="square">Square</option>
+                    <option value="polygon">Polygon</option>
+                </select>
+            </div>
+            &nbsp; &nbsp; &nbsp;
+            <div class="colorMenu">
+                <label for="color-menu">Pick a color </label>
+                <input id="color-menu" name="color-menu" type="color" value="#000000">
+            </div>
+        </div>
+        <div class="buttonContainer">
+            <input type="radio" id="drawNew" name="drawMode">Draw</input>
+            &nbsp;
+            <input type="radio" id="editShape" name="drawMode">Edit</input>
+            &nbsp;
+            <button type="radio" id="resetCanvas">Reset Canvas</button>
+        </div>
+        <canvas id="gl-canvas" width="700" height="500">
+            Oops ... your browser doesn't support the HTML5 canvas element
+        </canvas>      
+    </div>
+
+    <script src="script/utils.js"></script>
+    <script src="script/shape/Line.js"></script>
+    <!-- <script src="script/shape/Square.js"></script>
+    <script src="script/shape/Polygon.js"></script>-->
+    <script src="script/index.js"></script>
+    <script src="script/config.js"></script>
+</body>
+</html>
