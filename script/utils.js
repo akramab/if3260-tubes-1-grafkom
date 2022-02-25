@@ -53,11 +53,15 @@ function createProgram(gl, vertexShader, fragmentShader){
 function clear(){
   clearLine();
   lineCount=0;
+  clearPolygon();
 }
 
 function drawShape(e,shape){
   if(shape === "line"){
       drawNewLine(e);
+  }
+  if(shape === 'polygon') {
+    drawNewPolygon(e);
   }
 }
 

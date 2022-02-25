@@ -3,6 +3,7 @@ var editing = FALSE;
 var drawNew = document.getElementById("drawNew");
 var editShape = document.getElementById("editShape");
 var resetCanvas = document.getElementById("resetCanvas");
+var shapeMenu = document.getElementById("shape-menu");
 
 function webGl() {
     clear();
@@ -41,4 +42,8 @@ editShape.addEventListener("click", function(){
 
 resetCanvas.addEventListener("click", webGl);
 
-webGl();
+shapeMenu.addEventListener('change', (e) => {
+    canvas.removeEventListener('click', drawShape);
+})
+
+webGl(); 
