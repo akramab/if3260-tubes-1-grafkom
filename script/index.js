@@ -1,5 +1,6 @@
 var drawing = FALSE;
 var editing = FALSE;
+var selected = FALSE;
 var drawNew = document.getElementById("drawNew");
 var editShape = document.getElementById("editShape");
 var resetCanvas = document.getElementById("resetCanvas");
@@ -30,15 +31,36 @@ drawNew.addEventListener("click", function(){
     editing = FALSE;
 
     var shapeMenu = document.getElementById("shape-menu").value;
-    console.log(shapeMenu)
-
     canvas.addEventListener("click", e=>drawShape(e, shapeMenu));
 });
 
 editShape.addEventListener("click", function(){
     drawing = FALSE;
     editing = TRUE;
-    
+    var positionIdx = -1;
+
+    canvas.addEventListener("click", function(e){
+        getMousePosition(e)
+
+        if(editing === TRUE && drawing === FALSE){
+            if(selected === FALSE){
+                if(shapeMenu.value === 'line'){
+                    positionIdx = searchMatchingPositionIdx(arrayOfLineVertices, mousePosX, mousePosY);
+                    if(positionIdx !== -1){
+                        selected = TRUE;
+                    }
+                }
+            } else {
+                if(shapeMenu.value === 'line'){
+                    arrayOfLineVertices[positionIdx] = mousePosX;
+                    arrayOfLineVertices[positionIdx + 1] = mousePosY;
+                    createLine(arrayOfLineVertices, (arrayOfLineVertices.length / 5));
+                    selected = FALSE;
+                    positionIdx = -1;
+                }
+            } 
+        }
+    });
 });
 
 resetCanvas.addEventListener("click", webGl);

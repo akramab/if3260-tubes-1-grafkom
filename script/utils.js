@@ -6,6 +6,7 @@ var identityMatrix = [
 ];
 const TRUE = 1;
 const FALSE = 0;
+const TOLERANCE = 10;
 
 function createVertexShader(){
   vertexShaderProgram = ` 
@@ -97,6 +98,16 @@ function vertexAttribPointer(gl, aPosition, vertexColor){
   gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 0);
 }
 
+function searchMatchingPositionIdx(array, x, y){
+  for(var i = 0; i < array.length; i += 5){
+    var distanceToNearestPoint = getEuclideanDistance(array[i], array[i+1], x, y);
+    if (distanceToNearestPoint <= TOLERANCE) {
+      return i;
+    }
+  }
+  return -1;
+}
+
 // Save and Load
 var saveFile = document.getElementById("saveFile");
 saveFile.addEventListener('click', function(){
@@ -117,3 +128,9 @@ saveFile.addEventListener('click', function(){
   newFile.download = 'drawing.txt';
   newFile.click();
 });
+
+// var loadFile = document.getElementById("inputFile");
+// loadFile.addEventListener('change', function(e){
+//   var file = new FileReader();
+//   file.onload = function(e){
+//   };    
