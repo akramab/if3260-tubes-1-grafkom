@@ -10,17 +10,17 @@ const FALSE = 0;
 function createVertexShader(){
   vertexShaderProgram = ` 
     attribute vec4 a_position;
-    uniform mat4 transform_matrix;
-    attribute vec3 vertex_color;
-    varying vec3 fragColor;
     uniform vec2 u_resolution;
+    uniform mat4 transform_matrix;
+    varying vec3 f_color;
+    attribute vec3 v_color;
     void main(){
-        fragColor = vertex_color;
-        vec2 position = (transform_matrix * a_position).xy;
-        vec2 zeroToOne = position / u_resolution;
-        vec2 zeroToTwo = zeroToOne * 2.0;
-        vec2 clipSpace = zeroToTwo - 1.0;
-        gl_Position = vec4(clipSpace, 0, 1);
+      vec2 position = (transform_matrix * a_position).xy;
+      vec2 zeroToOne = position / u_resolution;
+      vec2 zeroToTwo = zeroToOne * 2.0;
+      vec2 clipSpace = zeroToTwo - 1.0;
+      gl_Position = vec4(clipSpace, 0, 1);
+      f_color = v_color;
     }`;
 
   vertexShader = gl.createShader(gl.VERTEX_SHADER);
@@ -31,10 +31,10 @@ function createVertexShader(){
 
 function createFragmentShader(){
   fragmentShaderProgram = 
-  `precision mediump float;
-    varying vec3 fragColor;
+  `precision highp float;
+    varying vec3 f_color;
     void main(){
-        gl_FragColor = vec4(fragColor, 1.0);
+      gl_FragColor = vec4(f_color, 1.0);
     }`;
   fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
   gl.shaderSource(fragmentShader, fragmentShaderProgram);
@@ -58,7 +58,7 @@ function clear(){
 
 function drawShape(e,shape){
   if(shape === "line"){
-      drawNewLine(e);
+    drawNewLine(e);
   }
   if(shape === 'polygon') {
     drawNewPolygon(e);
@@ -89,14 +89,31 @@ function hexToRgb(hex) {
   g = parseInt(result[2], 16);
   b = parseInt(result[3], 16);
   rgb.push(r, g, b);
-  if (result) {
-    return rgb; 
-  } else {
-    return null; 
-  }
+  return rgb;
 }
 
 function vertexAttribPointer(gl, aPosition, vertexColor){
-  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 0);
   gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
+  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 0);
 }
+
+// Save and Load
+var saveFile = document.getElementById("saveFile");
+saveFile.addEventListener('click', function(){
+  var newFile = document.createElement('a');
+  var outputData = '';
+
+  if(arrayOfLineVertices.length != 0){
+    arrayOfLineVertices.push('line');
+    outputData += JSON.stringify(arrayOfLineVertices);
+  }
+
+  if(arrayOfPolygonVertices.length != 0){
+    arrayOfPolygonVertices.push('polygon');
+    outputData += JSON.stringify(arrayOfPolygonVertices);
+  }
+
+  newFile.href = 'data:text/plain,' + outputData;
+  newFile.download = 'drawing.txt';
+  newFile.click();
+});

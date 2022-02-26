@@ -5,7 +5,7 @@ function createLine(lineVertices, lineCount){
   createVertexBuffer(lineVertices);
 
   var aPosition = gl.getAttribLocation(program, "a_position");
-  var vertexColor = gl.getAttribLocation(program, "vertex_color");
+  var vertexColor = gl.getAttribLocation(program, "v_color");
   var uResolution = gl.getUniformLocation(program, "u_resolution");
   var transformMatrix = gl.getUniformLocation(program, "transform_matrix");
 
@@ -24,8 +24,7 @@ function drawNewLine(e){
       var shapeColor = hexToRgb(document.getElementById("color-menu").value);
       getMousePosition(e);
 
-      arrayOfLineVertices.push(mousePosX);
-      arrayOfLineVertices.push(mousePosY);
+      arrayOfLineVertices.push(mousePosX, mousePosY);
       arrayOfLineVertices.push(shapeColor[0],shapeColor[1],shapeColor[2]);
 
       if(arrayOfLineVertices.length % 10 == 0){

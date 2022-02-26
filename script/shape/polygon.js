@@ -7,7 +7,7 @@ function createPolygon(polygonVertices){
   createVertexBuffer(polygonVertices);
 
   var aPosition = gl.getAttribLocation(program, "a_position");
-  var vertexColor = gl.getAttribLocation(program, "vertex_color");
+  var vertexColor = gl.getAttribLocation(program, "v_color");
   var uResolution = gl.getUniformLocation(program, "u_resolution");
   var transformMatrix = gl.getUniformLocation(program, "transform_matrix");
 

@@ -38,6 +38,7 @@ drawNew.addEventListener("click", function(){
 editShape.addEventListener("click", function(){
     drawing = FALSE;
     editing = TRUE;
+    
 });
 
 resetCanvas.addEventListener("click", webGl);
