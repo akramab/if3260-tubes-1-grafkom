@@ -71,7 +71,16 @@ editShape.addEventListener("click", function(){
                     });
                     createPolygon(arrayOfPolygonVertices);
                     selected = FALSE;
-                    positionsIdx = []
+                    positionsIdx = [];
+
+                    colorMenu.addEventListener('change', (e) => {
+                        shapeColor = hexToRgb(colorMenu.value);
+                        positionsIdx.forEach(matchingIdx => {
+                            arrayOfPolygonVertices[matchingIdx + 2] = shapeColor[0];
+                            arrayOfPolygonVertices[matchingIdx + 3] = shapeColor[1];
+                            arrayOfPolygonVertices[matchingIdx + 4] = shapeColor[2];
+                        });
+                    })
                 }
             } 
         }
