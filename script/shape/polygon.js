@@ -32,6 +32,7 @@ function drawNewPolygon(e){
 
       polygonTriangleCount = arrayOfPolygonVertices.length/5;
       if (polygonTriangleCount >= 3) {
+        console.log(arrayOfPolygonVertices)
         createPolygon(arrayOfPolygonVertices);
         // createPolygonStrips(arrayOfPolygonVertices);
       }
