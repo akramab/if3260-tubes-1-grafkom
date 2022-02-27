@@ -7,6 +7,8 @@ var identityMatrix = [
 const TRUE = 1;
 const FALSE = 0;
 const TOLERANCE = 10;
+const ELEMENT_SIZE = 5*Float32Array.BYTES_PER_ELEMENT;
+const COLOR_OFFSET = 2*Float32Array.BYTES_PER_ELEMENT;
 
 function createVertexShader(){
   vertexShaderProgram = ` 
@@ -94,8 +96,8 @@ function hexToRgb(hex) {
 }
 
 function vertexAttribPointer(gl, aPosition, vertexColor){
-  gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
-  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 0);
+  gl.vertexAttribPointer(vertexColor, 3, gl.FLOAT, false, ELEMENT_SIZE, COLOR_OFFSET);
+  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, ELEMENT_SIZE, 0);
 }
 
 function searchMatchingPositionIdx(array, x, y){
