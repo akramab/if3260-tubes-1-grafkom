@@ -1,22 +1,13 @@
 var RECTANGLE_DRAW_COUNT = 6; //
 
+var point1Rectangle = [];
+var point2Rectangle = [];
+
 var arrayOfRectangleVertices= [];
+var tempArrayOfRectangleVertice = [];
 var numOfRectangles = 0;
 var shapeColor = hexToRgb(document.getElementById("color-menu").value);
 
-// var MULT = 5
-// var X1 = 10 * MULT //X1 mouse 
-// var Y1 = 20 * MULT //Y2 mouse 
-// var X2 = 80 * MULT //X2 mouse
-// var Y2 = 20 * MULT //Y2 mouse
-// var X3 = 10 * MULT //X1 mouse
-// var Y3 = 30 * MULT //Y1 Mouse
-// var X4 = 10 * MULT //X1 mouse
-// var Y4 = 30 * MULT //Y1 Mouse
-// var X5 = 80 * MULT //X2 mouse
-// var Y5 = 20 * MULT //Y2 mouse
-// var X6 = 80 * MULT //X2 mouse
-// var Y6 = 30 * MULT //Y1 Mouse
 var clickCount = 0
 
 function createRectangle(polygonVertices){
@@ -38,40 +29,45 @@ function createRectangle(polygonVertices){
 
 }
 
+function setRectangleArrayVertice(point1, point2) {
+  var X1 = point1[0]
+  var X3 = point1[0]
+  var X4 = point1[0]
+
+  var Y3 = point1[1]
+  var Y4 = point1[1]
+  var Y6 = point1[1]
+
+  var X2 = point2[0]
+  var X5 = point2[0]
+  var X6 = point2[0]
+
+  var Y1 = point2[1]
+  var Y2 = point2[1]
+  var Y5 = point2[1]
+
+  var rectangleArrayVertice = [X1, Y1, shapeColor[0],shapeColor[1],shapeColor[2], X2, Y2, shapeColor[0],shapeColor[1],shapeColor[2], X3, Y3, shapeColor[0],shapeColor[1],shapeColor[2], X4, Y4, shapeColor[0],shapeColor[1],shapeColor[2], X5, Y5, shapeColor[0],shapeColor[1],shapeColor[2], X6, Y6, shapeColor[0],shapeColor[1],shapeColor[2]]
+
+  return rectangleArrayVertice
+}
+
 function drawNewRectangle(e){
   if(drawing === TRUE){
       getMousePosition(e);
 
       if (clickCount == 0) {
-        X1 = mousePosX
-        X3 = mousePosX
-        X4 = mousePosX
-
-        Y3 = mousePosY
-        Y4 = mousePosY
-        Y6 = mousePosY
-
+        point1Rectangle = [mousePosX, mousePosY]
       } else if (clickCount == 1) {
-        X2 = mousePosX
-        X5 = mousePosX
-        X6 = mousePosX
-
-        Y1 = mousePosY
-        Y2 = mousePosY
-        Y5 = mousePosY
-
+        point2Rectangle = [mousePosX, mousePosY]
+        tempArrayOfRectangleVertice = setRectangleArrayVertice(point1Rectangle, point2Rectangle)
       }
-      tempArrayOfRectangleVertice = [X1, Y1, shapeColor[0],shapeColor[1],shapeColor[2], X2, Y2, shapeColor[0],shapeColor[1],shapeColor[2], X3, Y3, shapeColor[0],shapeColor[1],shapeColor[2], X4, Y4, shapeColor[0],shapeColor[1],shapeColor[2], X5, Y5, shapeColor[0],shapeColor[1],shapeColor[2], X6, Y6, shapeColor[0],shapeColor[1],shapeColor[2]]
-
-
+      
       if (clickCount == 1) {
-        // initialVertex.push(X1, Y1)
         numOfRectangles++
         for(const arrEl of tempArrayOfRectangleVertice) {
           arrayOfRectangleVertices.push(arrEl)
         }
 
-        console.log(tempArrayOfRectangleVertice)
         createRectangle(arrayOfRectangleVertices);
         clickCount = 0
         return
