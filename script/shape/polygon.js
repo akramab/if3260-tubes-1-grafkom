@@ -4,6 +4,11 @@ var initialVertex = [];
 var shapeColor = hexToRgb(document.getElementById("color-menu").value);
 
 function createPolygon(polygonVertices){
+  polygonTriangleCount = polygonVertices.length/5;
+
+  console.log(polygonVertices);
+  console.log(polygonTriangleCount)
+
   createVertexBuffer(polygonVertices);
 
   var aPosition = gl.getAttribLocation(program, "a_position");
@@ -32,7 +37,6 @@ function drawNewPolygon(e){
 
       polygonTriangleCount = arrayOfPolygonVertices.length/5;
       if (polygonTriangleCount >= 3) {
-        console.log(arrayOfPolygonVertices)
         createPolygon(arrayOfPolygonVertices);
         // createPolygonStrips(arrayOfPolygonVertices);
       }

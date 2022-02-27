@@ -10,9 +10,11 @@ var point2Square = []
 var tempArrayOfSquareVertice = []
 
 
-var clickCount = 0
+var squareClickCount = 0
 
 function createSquare(polygonVertices){
+  numOfSquares = polygonVertices.length / 6  
+
   createVertexBuffer(polygonVertices);
 
   var aPosition = gl.getAttribLocation(program, "a_position");
@@ -71,27 +73,26 @@ function drawNewSquare(e){
   if(drawing === TRUE){
       getMousePosition(e);
 
-      if (clickCount == 0) {
+      if (squareClickCount == 0) {
           point1Square = [mousePosX, mousePosY]
 
-      } else if (clickCount == 1) {
+      } else if (squareClickCount == 1) {
           point2Square = [mousePosX, mousePosY]
           tempArrayOfSquareVertice = setSquareArrayVertice(point1Square, point2Square)
 
       }
 
-      if (clickCount == 1) {
-        numOfSquares++
+      if (squareClickCount == 1) {
         for(const arrEl of tempArrayOfSquareVertice) {
           arrayOfSquareVertices .push(arrEl)
         }
 
         createSquare(arrayOfSquareVertices );
-        clickCount = 0
+        squareClickCount = 0
         return
       }
 
-      clickCount++
+      squareClickCount++
   }
 }
 

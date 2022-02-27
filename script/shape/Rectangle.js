@@ -11,6 +11,8 @@ var shapeColor = hexToRgb(document.getElementById("color-menu").value);
 var clickCount = 0
 
 function createRectangle(polygonVertices){
+  numOfRectangles = polygonVertices.length / 6;
+
   createVertexBuffer(polygonVertices);
 
   var aPosition = gl.getAttribLocation(program, "a_position");
@@ -63,7 +65,6 @@ function drawNewRectangle(e){
       }
       
       if (clickCount == 1) {
-        numOfRectangles++
         for(const arrEl of tempArrayOfRectangleVertice) {
           arrayOfRectangleVertices.push(arrEl)
         }

@@ -62,6 +62,8 @@ function clear(){
 }
 
 function drawShape(e,shape){
+  
+
   if(shape === "line"){
     drawNewLine(e);
   }
@@ -140,6 +142,11 @@ saveFile.addEventListener('click', function(){
     outputData += JSON.stringify(arrayOfLineVertices);
   }
 
+  if(arrayOfSquareVertices.length != 0){
+    arrayOfSquareVertices.push('square')
+    outputData += JSON.stringify(arrayOfSquareVertices);
+  }
+
   if(arrayOfRectangleVertices.length != 0){
     arrayOfRectangleVertices.push('rectangle')
     outputData += JSON.stringify(arrayOfRectangleVertices);
@@ -155,8 +162,32 @@ saveFile.addEventListener('click', function(){
   newFile.click();
 });
 
-// var loadFile = document.getElementById("inputFile");
-// loadFile.addEventListener('change', function(e){
-//   var file = new FileReader();
-//   file.onload = function(e){
-//   };    
+var loadFile = document.getElementById("inputFile");
+loadFile.addEventListener('change', function(e){
+  var file = new FileReader();
+  file.onload = function(){
+    var loadResult = JSON.parse(file.result);
+
+    if (loadResult[loadResult.length - 1] === 'line') {
+      createLine(loadResult.slice(0, loadResult.length-1), (loadResult.slice(0, loadResult.length-1).length / 5))
+    }
+
+    if (loadResult[loadResult.length - 1] === 'rectangle') {
+      createRectangle(loadResult.slice(0, loadResult.length-1))
+    }
+
+    if (loadResult[loadResult.length - 1] === 'square') {
+      createSquare(loadResult.slice(0, loadResult.length-1))
+    }
+
+    if (loadResult[loadResult.length - 1] === 'rectangle') {
+      createRectangle(loadResult.slice(0, loadResult.length-1))
+    }
+
+    if (loadResult[loadResult.length - 1] === 'polygon') {
+      createPolygon(loadResult.slice(0, loadResult.length-1))
+    }
+  };
+  
+  file.readAsText(this.files[0])
+})
