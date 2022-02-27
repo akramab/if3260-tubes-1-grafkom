@@ -57,13 +57,21 @@ function clear(){
   clearLine();
   lineCount=0;
   clearPolygon();
+  clearRectangle();
+  clearSquare();
 }
 
 function drawShape(e,shape){
   if(shape === "line"){
     drawNewLine(e);
   }
-  if(shape === 'polygon') {
+  if(shape === 'square'){
+    drawNewSquare(e);
+  }
+  if(shape === 'rectangle'){
+    drawNewRectangle(e);
+  }
+  if(shape === 'polygon'){
     drawNewPolygon(e);
   }
 }
@@ -130,6 +138,11 @@ saveFile.addEventListener('click', function(){
   if(arrayOfLineVertices.length != 0){
     arrayOfLineVertices.push('line');
     outputData += JSON.stringify(arrayOfLineVertices);
+  }
+
+  if(arrayOfRectangleVertices.length != 0){
+    arrayOfRectangleVertices.push('rectangle')
+    outputData += JSON.stringify(arrayOfRectangleVertices);
   }
 
   if(arrayOfPolygonVertices.length != 0){

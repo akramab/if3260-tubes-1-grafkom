@@ -32,7 +32,7 @@ drawNew.addEventListener("click", function(){
     editing = FALSE;
 
     var shapeMenu = document.getElementById("shape-menu").value;
-    canvas.addEventListener("click", e=>drawShape(e, shapeMenu));
+    canvas.addEventListener("click", e=> drawShape(e, shapeMenu));
 });
 
 editShape.addEventListener("click", function(){
