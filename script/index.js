@@ -5,6 +5,7 @@ var drawNew = document.getElementById("drawNew");
 var editShape = document.getElementById("editShape");
 var resetCanvas = document.getElementById("resetCanvas");
 var shapeMenu = document.getElementById("shape-menu");
+var colorMenu = document.getElementById("color-menu");
 
 function webGl() {
     clear();
@@ -38,6 +39,7 @@ editShape.addEventListener("click", function(){
     drawing = FALSE;
     editing = TRUE;
     var positionIdx = -1;
+    var positionsIdx = []; // for multiple points in polygon
 
     canvas.addEventListener("click", function(e){
         getMousePosition(e)
@@ -49,6 +51,11 @@ editShape.addEventListener("click", function(){
                     if(positionIdx !== -1){
                         selected = TRUE;
                     }
+                } else if (shapeMenu.value === 'polygon'){
+                    positionsIdx = searchMatchingPositionsIdx(arrayOfPolygonVertices, mousePosX, mousePosY);
+                    if(positionsIdx.length !== 0){
+                        selected = TRUE
+                    }
                 }
             } else {
                 if(shapeMenu.value === 'line'){
@@ -57,6 +64,14 @@ editShape.addEventListener("click", function(){
                     createLine(arrayOfLineVertices, (arrayOfLineVertices.length / 5));
                     selected = FALSE;
                     positionIdx = -1;
+                } else if (shapeMenu.value === 'polygon'){
+                    positionsIdx.forEach(matchingIdx => {
+                        arrayOfPolygonVertices[matchingIdx] = mousePosX;
+                        arrayOfPolygonVertices[matchingIdx + 1] = mousePosY;
+                    });
+                    createPolygon(arrayOfPolygonVertices);
+                    selected = FALSE;
+                    positionsIdx = []
                 }
             } 
         }
@@ -67,6 +82,10 @@ resetCanvas.addEventListener("click", webGl);
 
 shapeMenu.addEventListener('change', (e) => {
     canvas.removeEventListener('click', drawShape);
+})
+
+colorMenu.addEventListener('change', (e) => {
+    shapeColor = hexToRgb(colorMenu.value);
 })
 
 webGl(); 

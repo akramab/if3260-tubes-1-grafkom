@@ -86,9 +86,9 @@ function getMousePosition(event){
 function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   rgb = [];
-  r = parseInt(result[1], 16);
-  g = parseInt(result[2], 16);
-  b = parseInt(result[3], 16);
+  r = parseInt(result[1], 16)/255;
+  g = parseInt(result[2], 16)/255;
+  b = parseInt(result[3], 16)/255;
   rgb.push(r, g, b);
   return rgb;
 }
@@ -106,6 +106,17 @@ function searchMatchingPositionIdx(array, x, y){
     }
   }
   return -1;
+}
+
+function searchMatchingPositionsIdx(array, x, y){
+  var idx = []
+  for(var i = 0; i < array.length; i += 5){
+    var distanceToNearestPoint = getEuclideanDistance(array[i], array[i+1], x, y);
+    if (distanceToNearestPoint <= TOLERANCE) {
+      idx.push(i);
+    }
+  }
+  return idx;
 }
 
 // Save and Load
