@@ -69,6 +69,12 @@ function setSquareArrayVertice(point1, point2) {
     return squareArrayVertice
 }
 
+function setEditedArrayOfSquareVertice(offset, newSquareArrayVertice) {
+    for (var i = offset; i <= offset + 30; i ++) {
+        arrayOfSquareVertices[i] = newSquareArrayVertice[i-offset]
+    }
+}
+
 function drawNewSquare(e){
   if(drawing === TRUE){
       getMousePosition(e);
@@ -94,6 +100,34 @@ function drawNewSquare(e){
 
       squareClickCount++
   }
+}
+
+function findSquareCornerPointsPairByX(xCoordinates) {
+    var xCornerPointsPair = []
+    var normalizeX = 0
+    var offset = 0
+    for(xCoordinate of xCoordinates) {
+        normalizeX = xCoordinate % 30
+        offset = xCoordinate - normalizeX
+        
+        if(normalizeX == 0) {
+            xCornerPointsPair = [offset, offset + normalizeX, offset + 25]
+
+            return xCornerPointsPair
+        } else if (normalizeX == 5) {
+            xCornerPointsPair = [offset, offset + normalizeX, offset + 15]
+
+            return xCornerPointsPair
+        } else if (normalizeX == 25) {
+            xCornerPointsPair = [offset, offset + normalizeX, offset + 0]
+
+            return xCornerPointsPair
+        } else if (normalizeX == 15) {
+            xCornerPointsPair = [offset, offset + normalizeX, offset + 5]
+
+            return xCornerPointsPair
+        }
+    }
 }
 
 function clearSquare(){

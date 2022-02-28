@@ -78,6 +78,40 @@ function drawNewRectangle(e){
   }
 }
 
+function findRectangleCornerPointsPairByX(xCoordinates) {
+  var xCornerPointsPair = []
+  var normalizeX = 0
+  var offset = 0
+  for(xCoordinate of xCoordinates) {
+      normalizeX = xCoordinate % 30
+      offset = xCoordinate - normalizeX
+
+      if(normalizeX == 10) {
+          xCornerPointsPair = [offset, offset + normalizeX, offset + 20]
+
+          return xCornerPointsPair
+      } else if (normalizeX == 25) {
+          xCornerPointsPair = [offset, offset + normalizeX, offset + 0]
+
+          return xCornerPointsPair
+      } else if (normalizeX == 20) {
+          xCornerPointsPair = [offset, offset + normalizeX, offset + 10]
+
+          return xCornerPointsPair
+      } else if (normalizeX == 0) {
+          xCornerPointsPair = [offset, offset + normalizeX, offset + 25]
+
+          return xCornerPointsPair
+      }
+  }
+}
+
+function setEditedArrayOfRectangleVertice(offset, newRectangleArrayVertice) {
+  for (var i = offset; i <= offset + 30; i ++) {
+      arrayOfRectangleVertices[i] = newRectangleArrayVertice[i-offset]
+  }
+}
+
 function clearRectangle(){
   if(arrayOfRectangleVertices.length !== 0){
     arrayOfRectangleVertices = [];
