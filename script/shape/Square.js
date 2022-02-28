@@ -37,19 +37,34 @@ function createSquare(polygonVertices){
 function setSquareArrayVertice(point1, point2) {
     var height = getEuclideanDistance(point1[0], point1[1], point2[0], point2[1]) / Math.sqrt(2)
     var width = height
+    var X2_M = 0
+    var Y2_M = 0
 
     var initPoint = point1
 
-    if (point1[0] > point2[0]) {
-        initPoint = point2
+    var X1_M = initPoint[0];
+    var Y1_M = initPoint[1];
+
+    if ((point1[0] <= point2[0]) && (point1[1] <= point2[1])) {
+        X2_M = initPoint[0] + width;
+        Y2_M = initPoint[1] + height;
     }
 
-    var X1_M = initPoint[0];
-    var X2_M = initPoint[0] + width;
+    if ((point1[0] > point2[0]) && (point1[1] < point2[1])) {
+        X2_M = initPoint[0] - width;
+        Y2_M = initPoint[1] + height;
+    }
 
-    var Y1_M = initPoint[1];
-    var Y2_M = initPoint[1] - height;
+    if ((point1[0] < point2[0]) && (point1[1] > point2[1])) {
+        X2_M = initPoint[0] + width;
+        Y2_M = initPoint[1] - height;
+    }
 
+    if ((point1[0] > point2[0]) && (point1[1] > point2[1])) {
+        X2_M = initPoint[0] - width;
+        Y2_M = initPoint[1] - height;
+    }
+    
     var MULT = 1
     var X1 = X1_M * MULT //X1 mouse 
     var Y1 = Y1_M * MULT //Y2 mouse 
@@ -70,7 +85,7 @@ function setSquareArrayVertice(point1, point2) {
 }
 
 function setEditedArrayOfSquareVertice(offset, newSquareArrayVertice) {
-    for (var i = offset; i <= offset + 30; i ++) {
+    for (var i = offset; i < offset + 30; i ++) {
         arrayOfSquareVertices[i] = newSquareArrayVertice[i-offset]
     }
 }
@@ -84,6 +99,8 @@ function drawNewSquare(e){
 
       } else if (squareClickCount == 1) {
           point2Square = [mousePosX, mousePosY]
+          console.log(point1Square)
+          console.log(point2Square)
           tempArrayOfSquareVertice = setSquareArrayVertice(point1Square, point2Square)
 
       }

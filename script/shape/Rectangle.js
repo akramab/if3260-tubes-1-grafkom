@@ -107,7 +107,7 @@ function findRectangleCornerPointsPairByX(xCoordinates) {
 }
 
 function setEditedArrayOfRectangleVertice(offset, newRectangleArrayVertice) {
-  for (var i = offset; i <= offset + 30; i ++) {
+  for (var i = offset; i < offset + 30; i ++) {
       arrayOfRectangleVertices[i] = newRectangleArrayVertice[i-offset]
   }
 }
